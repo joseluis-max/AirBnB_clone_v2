@@ -118,13 +118,48 @@ class HBNBCommand(cmd.Cmd):
         if not args:
             print("** class name missing **")
             return
+        elif len(args.split(" ")) > 1:
+            tokens = args.split(" ")
+            attr = tokens[1:]
+            kwargs = {}
+            for a in attr:
+                a = a.split("=")
+                try:
+                    key = a[0]
+                    value = a[1]
+                
+                    if key[0] != '"' and key[-1] != '"' and ' ' not in key:
+                        if value[0] == '"' and value[-1] == '"':
+                            if ' ' not in value:
+                                value = value[1:-1]
+                                value = value.replace('_', ' ').replace('"', '\"')
+                                kwargs[key] = value
+                        else:
+                            if '.' in value:
+                                try:
+                                    value = float(value)
+                                    kwargs[key] = value
+                                except (TypeError, ValueError):
+                                    pass
+                            else:
+                                try:
+                                    value = int(value)
+                                    kwargs[key] = value
+                                except (TypeError, ValueError):
+                                    pass
+                except IndexError:
+                    pass
+                        
+            new_instance = HBNBCommand.classes[tokens[0]](**kwargs)
+            print(new_instance.id)
+            new_instance.save()
+            return
         elif args not in HBNBCommand.classes:
             print("** class doesn't exist **")
             return
         new_instance = HBNBCommand.classes[args]()
-        storage.save()
+        new_instance.save()
         print(new_instance.id)
-        storage.save()
 
     def help_create(self):
         """ Help information for the create method """
