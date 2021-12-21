@@ -24,17 +24,17 @@ class BaseModel:
         else:
             try:
                 kwargs['updated_at'] = datetime\
-                                       .strptime(kwargs['updated_at'],'%Y-%m-%dT%H:%M:%S.%f')
-                kwargs['created_at'] = datetime\
-                                       .strptime(kwargs['created_at'],'%Y-%m-%dT%H:%M:%S.%f')
+                                       .strptime(kwargs['updated_at'],
+                                                 '%Y-%m-%dT%H:%M:%S.%f')
+                kwargs['created_at'] = \
+                    datetime.strptime(kwargs['created_at'],
+                                      '%Y-%m-%dT%H:%M:%S.%f')
                 del kwargs['__class__']
             except KeyError:
                 kwargs['id'] = str(uuid.uuid4())
                 kwargs['updated_at'] = datetime.now()
                 kwargs['created_at'] = datetime.now()
-                
             self.__dict__.update(kwargs)
-            
 
     def __str__(self):
         """Returns a string representation of the instance"""
@@ -45,7 +45,7 @@ class BaseModel:
         """Updates updated_at with current time when instance is changed"""
         from models import storage
         self.updated_at = datetime.now()
-        storage.new(self)   
+        storage.new(self)
         storage.save()
 
     def to_dict(self):
@@ -59,7 +59,7 @@ class BaseModel:
         if '_sa_instance_state' in dictionary:
             del dictionary['_sa_instance_state']
         return dictionary
-    
+
     def delete(self):
         """Delete the current instance from the storage by calling
             the method delete

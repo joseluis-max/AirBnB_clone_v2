@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-""" New engine storage 
+""" New engine storage
 """
 import sqlalchemy
 from os import getenv
@@ -14,6 +14,7 @@ from models.review import Review
 
 
 class DBStorage():
+    """Mysql storage with sqlalchemy"""
     __engine = None
     __session = None
 
@@ -21,14 +22,15 @@ class DBStorage():
         """ create the engine (self.__engine)
         """
         # load_dotenv()
-        URL = 'mysql+mysqldb://{:s}:{:s}@{:s}:3306/{:s}'.format(getenv('HBNB_MYSQL_USER'),
-                                                                getenv('HBNB_MYSQL_PWD'),
-                                                                getenv('HBNB_MYSQL_HOST'),
-                                                                getenv('HBNB_MYSQL_DB'))
+        URL = 'mysql+mysqldb://{:s}:{:s}@{:s}:3306/{:s}'\
+            .format(getenv('HBNB_MYSQL_USER'),
+                    getenv('HBNB_MYSQL_PWD'),
+                    getenv('HBNB_MYSQL_HOST'),
+                    getenv('HBNB_MYSQL_DB'))
         self.__engine = sqlalchemy.create_engine(URL, pool_pre_ping=True)
         if getenv('HBNB_ENV') == 'test':
             Base.metadata.drop_all(self.__engine)
-    
+
     def all(self, cls=None):
         """ query on the current database session (self.__session)
             all objects depending of the class name (argument cls)
@@ -63,7 +65,7 @@ class DBStorage():
         self.__session.commit()
 
     def delete(self, obj=None):
-        """ delete from the current database session obj if not None    
+        """ delete from the current database session obj if not None
         """
         self.__session.delete(obj)
 
@@ -75,7 +77,8 @@ class DBStorage():
             create the current database session
                 (self.__session) from the engine
                 (self.__engine) by using a sessionmaker -
-                the option expire_on_commit must be set to False ; and scoped_session -
+                the option expire_on_commit must be set to False ;
+                and scoped_session -
                 to make sure your Session is thread-safe
         """
         from models import state, city, base_model
@@ -83,5 +86,6 @@ class DBStorage():
         from sqlalchemy.orm import scoped_session
 
         Base.metadata.create_all(self.__engine)
-        Session = scoped_session(sessionmaker(bind=self.__engine, expire_on_commit=False))
+        Session = scoped_session(sessionmaker(bind=self.__engine,
+                                              expire_on_commit=False))
         self.__session = Session()

@@ -8,17 +8,17 @@ from models.base_model import BaseModel, Base
 from os import getenv
 from sqlalchemy import Column, String, ForeignKey, Float, Integer
 place_amenity = Table('place_amenity',
-                       Base.metadata,
-                       Column('place_id',
-                              String(60),
-                              ForeignKey('places.id'),
-                              primary_key=True,
-                              nullable=False),
-                       Column('amenity_id',
-                              String(60),
-                              ForeignKey('amenities.id'),
-                              primary_key=True,
-                              nullable=False))
+                      Base.metadata,
+                      Column('place_id',
+                             String(60),
+                             ForeignKey('places.id'),
+                             primary_key=True,
+                             nullable=False),
+                      Column('amenity_id',
+                             String(60),
+                             ForeignKey('amenities.id'),
+                             primary_key=True,
+                             nullable=False))
 
 
 class Place(BaseModel, Base):
@@ -35,19 +35,26 @@ class Place(BaseModel, Base):
     latitude = Column(Float)
     longitude = Column(Float)
     amenity_ids = []
-         
+
     if getenv('HBNB_TYPE_STORAGE') == 'db':
-        rewiews = relationship('Review', cascade='all, delete', backref='place')
-        amenities = relationship('Amenity', secondary="place_amenity", viewonly=False, overlaps="place_amenities")   
+        rewiews = relationship('Review',
+                               cascade='all, delete',
+                               backref='place')
+        amenities = relationship('Amenity',
+                                 secondary="place_amenity",
+                                 viewonly=False,
+                                 overlaps="place_amenities")
     else:
         @property
         def amenities(self):
-            """ Getter attribute amenities that returns the list of Amenity instances based on
-                the attribute amenity_ids that contains all Amenity.id linked to the Place
+            """ Getter attribute amenities that returns the list
+                of Amenity instances based on
+                the attribute amenity_ids that contains all Amenity.id
+                linked to the Place
             """
             from models import storage
             amenities = []
-            
+
             for amenities in storage.all(Amenity).values():
                 if amenities.id == self.id:
                     amenities.append(amenities)
@@ -57,7 +64,8 @@ class Place(BaseModel, Base):
         def amenities(self, obj):
             """ Setter attribute amenities that handles append method
                 for adding an Amenity.id to the attribute amenity_ids.
-                This method should accept only Amenity object, otherwise, do nothing.
+                This method should accept only Amenity object, otherwise,
+                do nothing.
             """
             if type(obj).__name__ == "Amenity":
                 self.amenity_ids.append(obj)
@@ -66,11 +74,12 @@ class Place(BaseModel, Base):
         def reviews(self):
             """ getter attribute reviews that returns the list of
             Review instances with place_id equals to the current
-                Place.id => It will be the FileStorage relationship between Place and Review
+                Place.id => It will be the FileStorage relationship
+                between Place and Review
             """
             from models import storage
             review = []
-            
+
             for review in storage.all(Review).values():
                 if review.place_id == self.id:
                     review.append(review)
