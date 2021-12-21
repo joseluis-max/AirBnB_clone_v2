@@ -15,7 +15,6 @@ class State(BaseModel, Base):
     if getenv('HBNB_TYPE_STORAGE') == 'db':
         cities = relationship('DBStorage', cascade='all, delete', backref='state')
     else:
-        @property
         def cities(self):
             """getter attribute cities that returns the list of City
                 instances with state_id equals to the current State.id => It will be the FileStorage
