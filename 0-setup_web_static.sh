@@ -3,8 +3,8 @@
 sudo apt -y update
 sudo apt -y install nginx
 ufw allow 'Nginx HTTP'
-sudo mkdir -p /data/web_static/releases/test/
-sudo mkdir -p /data/web_static/shared/
+sudo mkdir -p /data/web_static/releases/test
+sudo mkdir -p /data/web_static/shared
 echo "<h1>Html Testing Server</h1>" > /data/web_static/releases/test/index.html
 ln -sf /data/web_static/releases/test/ /data/web_static/current
 chown -R ubuntu:ubuntu /data/
