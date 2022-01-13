@@ -8,10 +8,11 @@ from datetime import date, datetime
 def do_pack():
     now = datetime.now()
     date = now.strftime("%Y%m%d%H%S%M")
-    local(f"sudo mkdir version && sudo tar\
-           -cvaz -f ./version/web_static_{date}.tgz ./web_static")
-    # local(f"tar -cvzf versions/web_static_{date}.tgz web_static")
-    return (f"versions/web_static_{date}.tgz")
+    status = local("tar -cvzf versions/web_static_{}.tgz web_static".format(date))
+    if status.failed:
+        return None
+    else:
+        return ("versions/web_static_{}.tgz".format(date))
 
 
 if __name__ == '__main__':
