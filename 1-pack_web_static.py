@@ -9,7 +9,7 @@ def do_pack():
     """ Genarate .tgz from web_static with fabric
     """
     now = datetime.now()
-    date = now.strftime("%Y%m%d%H%S%M")
+    date = now.strftime("%Y%m%d%H%M%S")
     local("mkdir -p versions")
     status = local("tar -cvzf versions/web_static_{}.tgz web_static".format(date))
     if status.failed:
