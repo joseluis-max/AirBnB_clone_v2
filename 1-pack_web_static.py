@@ -10,6 +10,7 @@ def do_pack():
     """
     now = datetime.now()
     date = now.strftime("%Y%m%d%H%S%M")
+    local("mkdir -p versions")
     status = local("tar -cvzf versions/web_static_{}.tgz web_static".format(date))
     if status.failed:
         return None
