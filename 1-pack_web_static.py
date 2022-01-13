@@ -13,7 +13,3 @@ def do_pack():
         return None
     else:
         return ("versions/web_static_{}.tgz".format(date))
-
-
-if __name__ == '__main__':
-    do_pack()
