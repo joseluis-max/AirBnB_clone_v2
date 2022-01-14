@@ -14,8 +14,8 @@ def do_clean(number=0):
         number = int(number) + 1
 
     local("""ls -t versions | tail +{} |
-           sed 's/^/versions\//' | xargs -d '\n' rm"""
+           sed 's/^/versions\//' | xargs -d '\n' rm -rf"""
           .format(number))
     run("""ls -t /data/web_static/releases | tail +{} |
-         sed 's/^/data/web_static/releases\//' | xargs -d '\n' rm"""
+         sed 's/^/data/web_static/releases\//' | xargs -d '\n' rm -rf"""
         .format(number))
