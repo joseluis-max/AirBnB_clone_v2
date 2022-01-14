@@ -6,7 +6,7 @@ env.hosts = ['34.75.115.12', '54.92.203.11']
 
 
 def do_clean(number=0):
-    """
+    """ Clean files oldest
     """
     if number == 0 or number == 1:
         number = 2
