@@ -15,8 +15,8 @@ def do_clean(number=0):
     # Trying with cd operations.
     with cd('/versions'):
         local("ls -t . | tail +{} | xargs -d '\n' rm"
-             .format(number))
+              .format(number))
 
     with cd('/data/web_static/releases'):
         run("ls -t . | tail +{} | xargs -d '\n' rm"
-           .format(number))
+            .format(number))
