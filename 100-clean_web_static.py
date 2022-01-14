@@ -12,6 +12,7 @@ def do_clean(number=0):
         number = 2
     else:
         number = int(number) + 1
+    # Trying with cd operations.
     local("""ls -t versions | tail +{} |
            sed 's/^/versions\//' | xargs -d '\n' rm"""
           .format(number))
