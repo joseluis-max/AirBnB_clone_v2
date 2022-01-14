@@ -52,7 +52,7 @@ exec {'create new location':
     path => '/bin/bash',
 }
 
-exec {'change own and group':
+exec {'restart Nginx':
     command => 'sudo service nginx restart',
     path => '/bin/bash',
 }
