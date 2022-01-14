@@ -13,10 +13,9 @@ def do_clean(number=0):
     else:
         number = int(number) + 1
     # Trying with cd operations.
-    with cd('/versions'):
-        local("ls -t . | tail +{} | xargs -d '\n' rm"
-              .format(number))
+    local("cd versions && ls -t . | tail +{} | xargs -d '\n' rm -rf"
+          .format(number))
 
     with cd('/data/web_static/releases'):
-        run("ls -t . | tail +{} | xargs -d '\n' rm"
+        run("ls -t . | tail +{} | xargs -d '\n' rm -rf"
             .format(number))
