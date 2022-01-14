@@ -9,7 +9,7 @@ def deploy():
     """ Call do_pack and call do_deploy for deploy web static
     """
     archive_path = do_pack()
-    if archive_path is not None:
-        return do_deploy(archive_path)
-    else:
+    if archive_path is None:
         return False
+    else:
+        return do_deploy(archive_path)
