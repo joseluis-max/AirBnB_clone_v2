@@ -35,7 +35,7 @@ def pythoniscool(text="is cool"):
 def number(n):
     """ Receive a number and print it only if is an integer """
     if type(n) == int:
-        return '%s is a number' % n
+        return '%d is a number' % n
 
 
 if __name__ == '__main__':
