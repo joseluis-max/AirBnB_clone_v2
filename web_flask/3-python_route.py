@@ -23,6 +23,7 @@ def cisfun(text):
     return 'C %s' % text
 
 
+@app.route('/python/', strict_slashes=False)
 @app.route('/python/(<text>)', strict_slashes=False)
 def pythoniscool(text="is cool"):
     """ Receive string and print it"""
