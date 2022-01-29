@@ -95,4 +95,4 @@ class DBStorage():
             session attribute (self.__session)
             or close() on the class Session
         """
-        self.__session.remove()
+        self.__session.close()
