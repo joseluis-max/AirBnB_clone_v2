@@ -34,7 +34,8 @@ def pythoniscool(text="is cool"):
 @app.route('/number/<n>', strict_slashes=False)
 def number(n):
     """ Receive a number and print it only if is an integer """
-    return '%s is a number' % n
+    if type(int) is 'int':
+        return '%s is a number' % n
 
 
 if __name__ == '__main__':
