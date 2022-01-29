@@ -1,17 +1,19 @@
 # Set up web server
+
+
 exec {'update packages':
-    command => 'sudo apt -y update',
-    path => '/bin/bash',
+    command => 'apt-get -y update',
+    path    => '/usr/local/bin/:/bin/',
 }
 
 exec {'installing Nginx':
-    command => 'sudo apt -y install nginx',
-    path => '/bin/bash',
+    command => 'apt-get -y install nginx',
+    path    => '/usr/local/bin/:/bin/',
 }
 
 exec {'set Nginx like web server':
-    command => "sudo ufw allow 'Nginx HTTP'",
-    path => '/bin/bash',
+    command => "ufw allow 'Nginx HTTP'",
+    path    => '/usr/local/bin/:/bin/',
 }
 
 file { '/data/web_static/releases/test':
@@ -37,22 +39,22 @@ file { '/data/web_static/releases/test/index.html':
 }
 
 exec {'create a symbolic link':
-    command => 'sudo ln -sf /data/web_static/releases/test/ /data/web_static/current',
-    path => '/bin/bash',
+    command => 'ln -sf /data/web_static/releases/test/ /data/web_static/current',
+    path    => '/usr/local/bin/:/bin/',
 }
 
 exec {'change own and group':
-    command => 'sudo chown -R ubuntu:ubuntu /data/',
-    path => '/bin/bash',
+    command => 'chown -R ubuntu:ubuntu /data/',
+    path    => '/usr/local/bin/:/bin/',
 }
 
 
 exec {'create new location':
-    command => 'sudo sed -i "/^\tlocation \/ {$/ i\\\tlocation /hbnb_static {\n\t\talias /data/web_static/current/;\n\t\tautoindex off;\n\t}" /etc/nginx/sites-available/default',
-    path => '/bin/bash',
+    command => 'sed -i "/^\tlocation \/ {$/ i\\\tlocation /hbnb_static {\n\t\talias /data/web_static/current/;\n\t\tautoindex off;\n\t}" /etc/nginx/sites-available/default',
+    path    => '/usr/local/bin/:/bin/',
 }
 
 exec {'restart Nginx':
-    command => 'sudo service nginx restart',
-    path => '/bin/bash',
+    command => 'service nginx restart',
+    path    => '/usr/local/bin/:/bin/',
 }
