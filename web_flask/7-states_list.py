@@ -4,17 +4,17 @@ from flask import Flask, render_template
 from models import storage
 app = Flask(__name__)
 
-data = storage.all()
-
 
 @app.teardown_appcontext
 def teardown_appcontext():
+    """ Remove the current SQLAlchemy Session"""
     storage.close()
 
 
 @app.route('states_list', strict_slashes=False)
 def states_list():
     """ Return list of states """
+    data = storage.all()
     return render_template('7-states_list.html', data=data)
 
 
