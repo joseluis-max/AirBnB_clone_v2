@@ -81,7 +81,6 @@ class DBStorage():
                 and scoped_session -
                 to make sure your Session is thread-safe
         """
-        from models import state, city, base_model
         from sqlalchemy.orm import sessionmaker
         from sqlalchemy.orm import scoped_session
 
